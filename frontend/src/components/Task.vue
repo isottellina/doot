@@ -1,10 +1,10 @@
 <template>
   <div class="task ui fluid card">
     <div class="content">
-      <div class="header">{{ name }}</div>
-      <div class="description"><slot /></div>
+      <div class="header">{{ task.name }}</div>
+      <div class="description">{{ task.desc }}</div>
     </div>
-    <div class="ui bottom attached button">Remove task</div>
+    <div class="ui bottom attached button" @click="removeTask">Remove task</div>
   </div>
 </template>
 
@@ -13,10 +13,19 @@ import { Options, Vue } from "vue-class-component";
 
 @Options({
   props: {
-    name: String,
+    task: {
+      id: Number,
+      name: String,
+      desc: String,
+    },
+  },
+  methods: {
+    removeTask() {
+      this.$store.dispatch("removeTask", this.task.id);
+    },
   },
 })
 export default class task extends Vue {
-  name!: string;
+  task!: Record<string, unknown>;
 }
 </script>

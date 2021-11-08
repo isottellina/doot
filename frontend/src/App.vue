@@ -3,11 +3,9 @@
   <div class="ui">
     <Task
       v-for="item in this.$store.state.tasks"
-      :key="item.name"
-      :name="item.name"
-    >
-      {{ item.desc }}
-    </Task>
+      :key="item.id"
+      :task="item"
+    />
   </div>
   <div class="add">
     <button class="ui fluid button">Add Task</button>
