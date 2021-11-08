@@ -1,8 +1,13 @@
 <template>
   <h1 class="ui header">Doot</h1>
   <div class="ui">
-    <Task name="Tâche 1" />
-    <Task name="Tâche 2" />
+    <Task
+      v-for="item in this.$store.state.tasks"
+      :key="item.name"
+      :name="item.name"
+    >
+      {{ item.desc }}
+    </Task>
   </div>
   <div class="add">
     <button class="ui fluid button">Add Task</button>

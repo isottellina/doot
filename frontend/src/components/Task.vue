@@ -2,6 +2,7 @@
   <div class="task ui fluid card">
     <div class="content">
       <div class="header">{{ name }}</div>
+      <div class="description"><slot /></div>
     </div>
     <div class="ui bottom attached button">Remove task</div>
   </div>
