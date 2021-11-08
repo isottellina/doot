@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  frontend:
+    image: doot-front:latest
+    build:
+      context: frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 8080:8080
