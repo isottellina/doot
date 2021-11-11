@@ -7,5 +7,32 @@ services:
       context: frontend
     volumes:
       - ./frontend:/app
+    expose:
+      - 8080
+    labels:
+      - "traefik.http.routers.frontend.rule=!PathPrefix(`/api`)"
+
+  backend:
+    image: doot-back:latest
+    build:
+      context: backend
+    expose:
+      - 8000
+    labels:
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+
+  proxy:
+    image: traefik:latest
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
     ports:
-      - 8080:8080
+      - "8000:80"
+      - "8080:8080"
+    depends_on:
+      - frontend
+      - backend
