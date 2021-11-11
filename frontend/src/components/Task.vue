@@ -13,31 +13,41 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent, PropType } from "vue";
 import Editor from "./Editor.vue";
 
-@Options({
+interface TaskObj {
+  id: number;
+  name: string;
+  desc: string;
+}
+
+export default defineComponent({
   props: {
     task: {
-      id: Number,
-      name: String,
-      desc: String,
+      type: Object as PropType<TaskObj>,
+      required: true,
     },
   },
   methods: {
     removeTask() {
-      this.$store.dispatch("removeTask", this.task.id);
+      this.$store.commit("removeTask", this.task.id);
     },
 
     setName(name: string): void {
-      this.task.name = name;
+      this.$store.commit("changeNameTask", {
+        task_id: this.task.id,
+        name: name,
+      });
     },
 
     setDesc(desc: string): void {
-      this.task.desc = desc;
+      this.$store.commit("changeDescTask", {
+        task_id: this.task.id,
+        desc: desc,
+      });
     },
   },
   components: { Editor },
-})
-export default class Task extends Vue {}
+});
 </script>

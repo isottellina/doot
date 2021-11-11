@@ -8,14 +8,19 @@ export default createStore({
     ],
   },
   mutations: {
-    REMOVE_TASK(state, payload) {
-      const idToRemove = state.tasks.findIndex((value) => value.id === payload);
-      state.tasks.splice(idToRemove, 1);
+    removeTask(state, task_id) {
+      const id = state.tasks.findIndex((value) => value.id === task_id);
+      state.tasks.splice(id, 1);
     },
-  },
-  actions: {
-    removeTask(context, payload) {
-      context.commit("REMOVE_TASK", payload);
+
+    changeNameTask(state, { task_id, name }) {
+      const id = state.tasks.findIndex((value) => value.id === task_id);
+      state.tasks[id].name = name;
+    },
+
+    changeDescTask(state, { task_id, desc }) {
+      const id = state.tasks.findIndex((value) => value.id === task_id);
+      state.tasks[id].desc = desc;
     },
   },
   modules: {},

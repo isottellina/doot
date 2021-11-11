@@ -14,11 +14,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onUpdated } from "vue";
 
 export default defineComponent({
   props: {
-    baseText: String,
+    baseText: {
+      type: String,
+      required: true,
+    },
   },
 
   methods: {
@@ -29,9 +32,18 @@ export default defineComponent({
   },
 
   setup(props) {
+    const text = ref(props.baseText.slice());
+    const edit = ref(false);
+
+    onUpdated(() => {
+      if (!edit.value) {
+        text.value = props.baseText.slice();
+      }
+    });
+
     return {
-      edit: ref(false),
-      text: props.baseText,
+      edit: edit,
+      text: text,
     };
   },
 });
