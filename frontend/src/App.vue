@@ -1,11 +1,7 @@
 <template>
   <h1 class="ui header">Doot</h1>
   <div class="ui">
-    <Task
-      v-for="item in this.$store.state.tasks"
-      :key="item.id"
-      :task="item"
-    />
+    <Task v-for="item in this.tasks" :key="item.id" :task="item" />
   </div>
   <div class="add">
     <button class="ui fluid button">Add Task</button>
@@ -14,12 +10,14 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { mapState } from "vuex";
 import Task from "./components/Task.vue";
 
 @Options({
   components: {
     Task,
   },
+  computed: mapState(["tasks"]),
 })
 export default class App extends Vue {}
 </script>

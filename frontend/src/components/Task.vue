@@ -1,8 +1,12 @@
 <template>
   <div class="task ui fluid card">
     <div class="content">
-      <div class="header">{{ task.name }}</div>
-      <div class="description">{{ task.desc }}</div>
+      <div class="header">
+        <Editor :base-text="task.name" @edited="setName" />
+      </div>
+      <div class="description">
+        <Editor :base-text="task.desc" @edited="setDesc" />
+      </div>
     </div>
     <div class="ui bottom attached button" @click="removeTask">Remove task</div>
   </div>
@@ -10,6 +14,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import Editor from "./Editor.vue";
 
 @Options({
   props: {
@@ -23,9 +28,16 @@ import { Options, Vue } from "vue-class-component";
     removeTask() {
       this.$store.dispatch("removeTask", this.task.id);
     },
+
+    setName(name: string): void {
+      this.task.name = name;
+    },
+
+    setDesc(desc: string): void {
+      this.task.desc = desc;
+    },
   },
+  components: { Editor },
 })
-export default class task extends Vue {
-  task!: Record<string, unknown>;
-}
+export default class Task extends Vue {}
 </script>
