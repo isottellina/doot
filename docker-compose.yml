@@ -17,7 +17,7 @@ services:
     build:
       context: backend
     expose:
-      - 8000
+      - 8080
     labels:
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
 

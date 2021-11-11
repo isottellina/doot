@@ -5,8 +5,8 @@ COPY doot /doot
 WORKDIR /doot
 RUN cargo build --release
 
-FROM alpine:latest
-RUN apk add libgcc gcompat
+FROM debian:bullseye-slim
+RUN apt-get update && apt-get install libgcc1 libc6
 COPY --from=build /doot/target/release/doot /usr/local/bin/doot
 
 CMD ["/usr/local/bin/doot"]
