@@ -1,12 +1,5 @@
-FROM rust:latest AS build
-    MAINTAINER Louise Zanier <louise.zanier@free.fr>
-
-COPY doot /doot
+FROM rust:latest
 WORKDIR /doot
-RUN cargo build --release
+RUN cargo install diesel_cli
 
-FROM debian:bullseye-slim
-RUN apt-get update && apt-get install libgcc1 libc6
-COPY --from=build /doot/target/release/doot /usr/local/bin/doot
-
-CMD ["/usr/local/bin/doot"]
+CMD ["cargo", "run"]

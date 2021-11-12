@@ -20,6 +20,17 @@ services:
       - 8080
     labels:
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+    env_file:
+      - postgres.env
+    volumes:
+      - ./backend/doot:/doot:rw
+
+  postgres:
+    image: postgres:14
+    env_file:
+      - postgres.env
+    ports:
+      - 5432:5432
 
   proxy:
     image: traefik:latest

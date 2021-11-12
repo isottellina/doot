@@ -5,7 +5,7 @@
         <Editor :base-text="task.name" @edited="setName" />
       </div>
       <div class="description">
-        <Editor :base-text="task.desc" @edited="setDesc" />
+        <Editor :base-text="task.description" @edited="setDesc" />
       </div>
     </div>
     <div class="ui bottom attached button" @click="removeTask">Remove task</div>
@@ -15,12 +15,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import Editor from "./Editor.vue";
-
-interface TaskObj {
-  id: number;
-  name: string;
-  desc: string;
-}
+import { TaskObj } from "../store";
 
 export default defineComponent({
   props: {

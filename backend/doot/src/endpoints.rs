@@ -1,21 +1,24 @@
-use tide::Request;
-use http_types::{Body, convert::json};
+use tide::{Request, Error};
+use http_types::Body;
+
+use diesel::prelude::*;
+use diesel::pg::PgConnection;
+
+use crate::models::Task;
 
 pub async fn get_tasks(_req: Request<()>) -> tide::Result {
-    Ok(
-        Body::from_json(
-            &json!([
-                {
-                    "id": 0i32,
-                    "name": "Tâche back",
-                    "desc": "Première tache",
-                },
-                {
-                    "id": 1i32,
-                    "name": "Tâche front",
-                    "desc": "Deuxième tâche"
-                }
-            ])
-        )?.into()
-    )
+    use crate::schema::tasks::dsl::*;
+
+    let conn = PgConnection::establish("postgres://debug:debug@postgres/doot").unwrap();
+    if let Ok(results) = tasks.load::<Task>(&conn) {
+        Ok(
+            Body::from_json(&results)?.into()
+        )
+    } else {
+        Err(Error::from_str(500, "Couldn't read tasks"))
+    }
+}
+
+pub async fn create_task(req: Request<()>) -> tide::Result {
+    Ok(format!("{:?}", req).into())
 }

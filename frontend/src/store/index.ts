@@ -4,7 +4,7 @@ import axios from "axios";
 export interface TaskObj {
   id: number;
   name: string;
-  desc: string;
+  description: string;
 }
 
 export interface State {
@@ -32,7 +32,7 @@ export default createStore<State>({
 
     changeDescTask(state, { task_id, desc }) {
       const id = state.tasks.findIndex((value) => value.id === task_id);
-      state.tasks[id].desc = desc;
+      state.tasks[id].description = desc;
     },
 
     setTaskList(state, task_list) {
@@ -47,13 +47,12 @@ export default createStore<State>({
     },
 
     createTask({ commit }, task_name) {
-      const task = {
-        id: 99,
+      axios.post("/api/tasks", {
         name: task_name,
-        desc: "No description (yet?)",
-      };
-
-      commit("createTask", task);
+        description: "No description (yet?)",
+      }).then((response) => {
+        console.log(response.data);
+      });
     },
   },
   modules: {},
