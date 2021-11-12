@@ -1,11 +1,19 @@
 import { createStore } from "vuex";
+import axios from "axios";
 
-export default createStore({
+export interface TaskObj {
+  id: number;
+  name: string;
+  desc: string;
+}
+
+export interface State {
+  tasks: Array<TaskObj>;
+}
+
+export default createStore<State>({
   state: {
-    tasks: [
-      { id: 1, name: "Tâche 1", desc: "Exemple de tâche" },
-      { id: 2, name: "Tâche 2", desc: "Exemple de tâche" },
-    ],
+    tasks: [],
   },
   mutations: {
     removeTask(state, task_id) {
@@ -21,6 +29,17 @@ export default createStore({
     changeDescTask(state, { task_id, desc }) {
       const id = state.tasks.findIndex((value) => value.id === task_id);
       state.tasks[id].desc = desc;
+    },
+
+    setTaskList(state, task_list) {
+      state.tasks = task_list;
+    },
+  },
+  actions: {
+    getTasks({ commit }) {
+      axios.get("/api/tasks").then((response) => {
+        commit("setTaskList", response.data);
+      });
     },
   },
   modules: {},

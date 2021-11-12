@@ -1,17 +1,8 @@
-import { Store } from "vuex"; // path to store file
+import { Store } from "vuex";
+import { State } from "./store";
 
 declare module "@vue/runtime-core" {
-  interface TaskObj {
-    id: number;
-    name: string;
-    desc: string;
-  }
-
-  interface State {
-    tasks: Array<TaskObj>;
-  }
-
   interface ComponentCustomProperties {
-    $store: Store;
+    $store: Store<State>;
   }
 }

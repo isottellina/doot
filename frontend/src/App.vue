@@ -17,6 +17,9 @@ export default defineComponent({
   components: {
     Task,
   },
+  created() {
+    this.$store.dispatch("getTasks");
+  },
   computed: mapState(["tasks"]),
 });
 </script>
