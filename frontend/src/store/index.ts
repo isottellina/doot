@@ -16,6 +16,10 @@ export default createStore<State>({
     tasks: [],
   },
   mutations: {
+    createTask(state, task) {
+      state.tasks.push(task);
+    },
+
     removeTask(state, task_id) {
       const id = state.tasks.findIndex((value) => value.id === task_id);
       state.tasks.splice(id, 1);
@@ -40,6 +44,16 @@ export default createStore<State>({
       axios.get("/api/tasks").then((response) => {
         commit("setTaskList", response.data);
       });
+    },
+
+    createTask({ commit }, task_name) {
+      const task = {
+        id: 99,
+        name: task_name,
+        desc: "No description (yet?)",
+      };
+
+      commit("createTask", task);
     },
   },
   modules: {},

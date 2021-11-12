@@ -3,9 +3,15 @@
   <div class="ui">
     <Task v-for="item in this.tasks" :key="item.id" :task="item" />
   </div>
-  <div class="add">
-    <button class="ui fluid button">Add Task</button>
-  </div>
+  <form @submit.prevent="createTask" class="add ui action input fluid">
+    <input
+      id="newTaskName"
+      v-model="newTaskName"
+      placeholder="Name of the new task"
+      type="text"
+    />
+    <button type="submit" class="ui button">Add task</button>
+  </form>
 </template>
 
 <script lang="ts">
@@ -14,8 +20,23 @@ import { mapState } from "vuex";
 import Task from "./components/Task.vue";
 
 export default defineComponent({
+  data() {
+    return {
+      newTaskName: "",
+    };
+  },
   components: {
     Task,
+  },
+  methods: {
+    createTask(): void {
+      console.log(this.newTaskName);
+
+      if (this.newTaskName != "") {
+        this.$store.dispatch("createTask", this.newTaskName);
+        this.newTaskName = "";
+      }
+    },
   },
   created() {
     this.$store.dispatch("getTasks");
