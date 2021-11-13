@@ -1,4 +1,4 @@
-use tide::{Request, Error};
+use tide::{Request, Response, Error};
 use http_types::Body;
 
 use diesel::prelude::*;
@@ -30,4 +30,16 @@ pub async fn create_task(mut req: Request<()>) -> tide::Result {
         .get_result::<Task>(&conn)?;
 
     Ok(Body::from_json(&new_task)?.into())
+}
+
+pub async fn delete_task(req: Request<()>) -> tide::Result {
+    use crate::schema::tasks::dsl::*;
+
+    let id_tod = req.param("id")?.parse::<i32>()?;
+    let conn = PgConnection::establish("postgres://debug:debug@postgres/doot").unwrap();
+
+    diesel::delete(tasks.filter(id.eq(id_tod)))
+        .execute(&conn)?;
+
+    Ok(Response::new(200))
 }

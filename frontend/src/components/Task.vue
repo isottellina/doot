@@ -26,7 +26,7 @@ export default defineComponent({
   },
   methods: {
     removeTask() {
-      this.$store.commit("removeTask", this.task.id);
+      this.$store.dispatch("deleteTask", this.task.id);
     },
 
     setName(name: string): void {

@@ -56,6 +56,12 @@ export default createStore<State>({
           commit("createTask", response.data);
         });
     },
+
+    deleteTask({ commit }, task_id) {
+      axios.delete(`/api/tasks/${task_id}`).then(() => {
+        commit("removeTask", task_id);
+      });
+    },
   },
   modules: {},
 });
