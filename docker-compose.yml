@@ -5,10 +5,8 @@ services:
     image: doot-front:latest
     build:
       context: frontend
-    volumes:
-      - ./frontend:/app
     expose:
-      - 8080
+      - 80
     labels:
       - "traefik.http.routers.frontend.rule=!PathPrefix(`/api`)"
 
