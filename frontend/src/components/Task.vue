@@ -30,14 +30,14 @@ export default defineComponent({
     },
 
     setName(name: string): void {
-      this.$store.commit("changeNameTask", {
+      this.$store.dispatch("changeNameTask", {
         task_id: this.task.id,
         name: name,
       });
     },
 
     setDesc(desc: string): void {
-      this.$store.commit("changeDescTask", {
+      this.$store.dispatch("changeDescTask", {
         task_id: this.task.id,
         desc: desc,
       });

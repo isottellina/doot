@@ -15,3 +15,9 @@ pub struct NewTask {
     pub name: String,
     pub description: String,
 }
+
+#[derive(Deserialize)]
+pub struct PatchableTask {
+    pub name: Option<String>,
+    pub description: Option<String>,
+}

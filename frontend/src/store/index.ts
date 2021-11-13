@@ -62,6 +62,26 @@ export default createStore<State>({
         commit("removeTask", task_id);
       });
     },
+
+    changeNameTask({ commit }, { task_id, name }) {
+      axios
+        .patch(`/api/tasks/${task_id}`, {
+          name: name,
+        })
+        .then(() => {
+          commit("changeNameTask", { task_id, name });
+        });
+    },
+
+    changeDescTask({ commit }, { task_id, desc }) {
+      axios
+        .patch(`/api/tasks/${task_id}`, {
+          description: desc,
+        })
+        .then(() => {
+          commit("changeDescTask", { task_id, desc });
+        });
+    },
   },
   modules: {},
 });
