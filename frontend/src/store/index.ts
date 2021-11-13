@@ -47,12 +47,14 @@ export default createStore<State>({
     },
 
     createTask({ commit }, task_name) {
-      axios.post("/api/tasks", {
-        name: task_name,
-        description: "No description (yet?)",
-      }).then((response) => {
-        console.log(response.data);
-      });
+      axios
+        .post("/api/tasks", {
+          name: task_name,
+          description: "No description (yet?)",
+        })
+        .then((response) => {
+          commit("createTask", response.data);
+        });
     },
   },
   modules: {},

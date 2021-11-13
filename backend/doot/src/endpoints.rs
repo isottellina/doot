@@ -4,7 +4,7 @@ use http_types::Body;
 use diesel::prelude::*;
 use diesel::pg::PgConnection;
 
-use crate::models::Task;
+use crate::models::{Task, NewTask};
 
 pub async fn get_tasks(_req: Request<()>) -> tide::Result {
     use crate::schema::tasks::dsl::*;
@@ -19,6 +19,15 @@ pub async fn get_tasks(_req: Request<()>) -> tide::Result {
     }
 }
 
-pub async fn create_task(req: Request<()>) -> tide::Result {
-    Ok(format!("{:?}", req).into())
+pub async fn create_task(mut req: Request<()>) -> tide::Result {
+    use crate::schema::tasks::dsl::*;
+
+    let data = req.body_json::<NewTask>().await?;
+    let conn = PgConnection::establish("postgres://debug:debug@postgres/doot").unwrap();
+
+    let new_task = diesel::insert_into(tasks)
+        .values(&data)
+        .get_result::<Task>(&conn)?;
+
+    Ok(Body::from_json(&new_task)?.into())
 }

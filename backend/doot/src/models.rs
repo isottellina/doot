@@ -9,9 +9,9 @@ pub struct Task {
     pub description: Option<String>,
 }
 
-#[derive(Insertable, Debug)]
+#[derive(Insertable, Debug, Deserialize)]
 #[table_name="tasks"]
-pub struct NewTask<'a> {
-    pub name: &'a str,
-    pub description: &'a str,
+pub struct NewTask {
+    pub name: String,
+    pub description: String,
 }

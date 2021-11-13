@@ -9,7 +9,7 @@
       v-model="newTaskName"
       placeholder="Name of the new task"
       type="text"
-    />
+      />
     <button type="submit" class="ui button">Add task</button>
   </form>
 </template>
@@ -30,8 +30,6 @@ export default defineComponent({
   },
   methods: {
     createTask(): void {
-      console.log(this.newTaskName);
-
       if (this.newTaskName != "") {
         this.$store.dispatch("createTask", this.newTaskName);
         this.newTaskName = "";
