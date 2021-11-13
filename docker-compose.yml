@@ -9,6 +9,8 @@ services:
       - 80
     labels:
       - "traefik.http.routers.frontend.rule=!PathPrefix(`/api`)"
+    depends_on:
+      - backend
 
   backend:
     image: doot-back:latest
@@ -20,6 +22,8 @@ services:
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
     env_file:
       - postgres.env
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:14
