@@ -22,8 +22,6 @@ services:
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
     env_file:
       - postgres.env
-    volumes:
-      - ./backend/doot:/doot:rw
 
   postgres:
     image: postgres:14

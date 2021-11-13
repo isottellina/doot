@@ -1,5 +1,11 @@
-FROM rust:latest
-WORKDIR /doot
-RUN cargo install diesel_cli
+FROM rust:latest AS build
 
-CMD ["cargo", "run"]
+COPY doot /doot
+WORKDIR /doot
+RUN cargo build --release
+
+FROM debian:bullseye-slim
+RUN apt-get update && apt-get install -y libpq5
+COPY --from=build /doot/target/release/doot /usr/local/bin/doot
+
+CMD ["/usr/local/bin/doot"]
