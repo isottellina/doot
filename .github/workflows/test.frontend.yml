@@ -1,0 +1,16 @@
+name: test-frontend
+on: [push]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install yarn
+        run: npm install --global yarn
+      - name: Yarn Install
+        run: yarn install
+      - name: Run jest
+        run: yarn run jest --coverage
