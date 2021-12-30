@@ -2,10 +2,10 @@
   <div class="task ui fluid card">
     <div class="content">
       <div class="header">
-        <Editor :base-text="task.name" @edited="setName" />
+        <Editor class="task-name" :base-text="task.name" @edited="setName" />
       </div>
       <div class="description">
-        <Editor :base-text="task.description" @edited="setDesc" />
+        <Editor class="task-desc" :base-text="task.description" @edited="setDesc" />
       </div>
     </div>
     <div class="ui bottom attached button" @click="removeTask">Remove task</div>
