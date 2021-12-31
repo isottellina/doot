@@ -1,4 +1,4 @@
-import { mount, shallowMount, VueWrapper } from "@vue/test-utils";
+import { config, mount, shallowMount, VueWrapper } from "@vue/test-utils";
 import Task from "@/components/Task.vue";
 
 import { TaskObj, MockStore } from "./types";
@@ -16,16 +16,15 @@ describe("Task.vue", () => {
     };
 
     mockStore = createMockStore();
+
+    config.global.provide = {
+      store: mockStore
+    };
   });
 
   it("renders name when passed", () => {
     const wrapper = mount(Task, {
       props: { task: exampleTask },
-      global: {
-        provide: {
-          store: mockStore
-        },
-      },
     });
     expect(wrapper.text()).toMatch(exampleTask.name);
   });
@@ -33,11 +32,6 @@ describe("Task.vue", () => {
   it("renders description when passed", () => {
     const wrapper = mount(Task, {
       props: { task: exampleTask },
-      global: {
-        provide: {
-          store: mockStore,
-        },
-      },
     });
     expect(wrapper.text()).toMatch(exampleTask.description);
   });
@@ -45,11 +39,6 @@ describe("Task.vue", () => {
   it("deletes task when button is pressed.", () => {
     const wrapper = shallowMount(Task, {
       props: { task: exampleTask },
-      global: {
-        provide: {
-          store: mockStore,
-        },
-      },
     });
 
     const button = wrapper.find(".button");
@@ -62,11 +51,6 @@ describe("Task.vue", () => {
   it("changes name.", () => {
     const wrapper = mount(Task, {
       props: { task: exampleTask },
-      global: {
-        provide: {
-          store: mockStore,
-        },
-      },
     });
 
     const nameEditor = wrapper.getComponent(".task-name") as VueWrapper;
@@ -82,11 +66,6 @@ describe("Task.vue", () => {
   it("changes description.", () => {
     const wrapper = shallowMount(Task, {
       props: { task: exampleTask },
-      global: {
-        provide: {
-          store: mockStore,
-        },
-      },
     });
 
     const descEditor = wrapper.getComponent(".task-desc") as VueWrapper;
