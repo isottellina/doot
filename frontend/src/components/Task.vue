@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { useStore } from "vuex";
 import Editor from "./Editor.vue";
 import { TaskObj } from "../store";
 
@@ -24,25 +25,34 @@ export default defineComponent({
       required: true,
     },
   },
-  methods: {
-    removeTask() {
-      this.$store.dispatch("deleteTask", this.task.id);
-    },
+  components: { Editor },
 
-    setName(name: string): void {
-      this.$store.dispatch("changeNameTask", {
-        task_id: this.task.id,
+  setup(props) {
+    const store = useStore();
+
+    const removeTask = () => {
+      store.dispatch("deleteTask", props.task.id);
+    };
+
+    const setName = (name: string): void => {
+      store.dispatch("changeNameTask", {
+        task_id: props.task.id,
         name: name,
       });
-    },
+    };
 
-    setDesc(desc: string): void {
-      this.$store.dispatch("changeDescTask", {
-        task_id: this.task.id,
+    const setDesc = (desc: string): void => {
+      store.dispatch("changeDescTask", {
+        task_id: props.task.id,
         desc: desc,
       });
-    },
+    };
+
+    return {
+      removeTask,
+      setName,
+      setDesc,
+    };
   },
-  components: { Editor },
 });
 </script>

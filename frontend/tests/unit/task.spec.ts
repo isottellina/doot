@@ -21,6 +21,11 @@ describe("Task.vue", () => {
   it("renders name when passed", () => {
     const wrapper = mount(Task, {
       props: { task: exampleTask },
+      global: {
+        provide: {
+          store: mockStore
+        },
+      },
     });
     expect(wrapper.text()).toMatch(exampleTask.name);
   });
@@ -28,20 +33,21 @@ describe("Task.vue", () => {
   it("renders description when passed", () => {
     const wrapper = mount(Task, {
       props: { task: exampleTask },
+      global: {
+        provide: {
+          store: mockStore,
+        },
+      },
     });
     expect(wrapper.text()).toMatch(exampleTask.description);
   });
 
   it("deletes task when button is pressed.", () => {
-    const $store = {
-      dispatch: jest.fn(),
-    };
-
     const wrapper = shallowMount(Task, {
       props: { task: exampleTask },
       global: {
-        mocks: {
-          $store,
+        provide: {
+          store: mockStore,
         },
       },
     });
@@ -49,16 +55,16 @@ describe("Task.vue", () => {
     const button = wrapper.find(".button");
     button.trigger("click");
 
-    expect($store.dispatch).toHaveBeenCalled();
-    expect($store.dispatch).toHaveBeenCalledWith("deleteTask", 1);
+    expect(mockStore.dispatch).toHaveBeenCalled();
+    expect(mockStore.dispatch).toHaveBeenCalledWith("deleteTask", 1);
   });
 
   it("changes name.", () => {
     const wrapper = mount(Task, {
       props: { task: exampleTask },
       global: {
-        mocks: {
-          $store: mockStore,
+        provide: {
+          store: mockStore,
         },
       },
     });
@@ -77,8 +83,8 @@ describe("Task.vue", () => {
     const wrapper = shallowMount(Task, {
       props: { task: exampleTask },
       global: {
-        mocks: {
-          $store: mockStore,
+        provide: {
+          store: mockStore,
         },
       },
     });
