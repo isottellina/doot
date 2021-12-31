@@ -24,14 +24,7 @@ export default defineComponent({
     },
   },
 
-  methods: {
-    commitEdit(): void {
-      this.edit = false;
-      this.$emit("edited", this.text);
-    },
-  },
-
-  setup(props) {
+  setup(props, { emit }) {
     const text = ref(props.baseText.slice());
     const edit = ref(false);
 
@@ -41,9 +34,15 @@ export default defineComponent({
       }
     });
 
+    const commitEdit = (): void => {
+      edit.value = false;
+      emit("edited", text.value);
+    };
+
     return {
-      edit: edit,
-      text: text,
+      edit,
+      text,
+      commitEdit,
     };
   },
 });
